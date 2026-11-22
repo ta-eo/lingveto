@@ -5,6 +5,12 @@
 
 作者はエスペラントとコンパイラ開発の両方について初学者です。レビューと修正を頂けると幸いです。
 
+TODO:
+1. ソースファイルから実行
+2. タプル Tuple
+3. 判別共用体 Discriminated Union
+4. パターンマッチ Pattern Matching
+
 現時点で書ける式の例です。
 
 - `komenc E fin`はOCamlの`begin E end`，
