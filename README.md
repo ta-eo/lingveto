@@ -44,6 +44,9 @@ se 1 < 2 tiam 1 alie 0
 // 0
 se 1 < 1 tiam 1 alie 0
 
+// <funkcio>
+fn x -> x
+
 // 2
 (fn x -> x + 1) 1
 

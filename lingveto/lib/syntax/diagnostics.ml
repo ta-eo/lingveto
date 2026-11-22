@@ -11,6 +11,8 @@ exception Error of t
 
 let raise_at loc kind = raise (Error { kind; loc })
 
+
+(* esperantigos *)
 let message = function
   | Unexpected_char c -> Printf.sprintf "unexpected character '%s'" c
   | Int_literal_out_of_range s ->
