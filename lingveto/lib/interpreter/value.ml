@@ -12,7 +12,7 @@ type t =
 
 let to_string = function
   | VInt n -> Int64.to_string n
-  | VBool b -> string_of_bool b
+  | VBool b -> if b then "vera" else "falsa"
   | VFun _ -> "<funkcio>"
 
 

@@ -48,7 +48,7 @@ se 1 < 1 tiam 1 alie 0
 (fn x -> x + 1) 1
 
 // 3
-est f = fn x -> fn y -> x + y en f 1 3
+est f = fn x -> fn y -> x + y en f 1 2
 
 // 55
 est rek f = fn x ->
