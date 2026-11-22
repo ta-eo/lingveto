@@ -1,6 +1,21 @@
 - Nepura funkcia programlingvo simila al OCaml
 - Uzas ŝlosilvortojn prenitajn de la Esperanta vortostoko
 
+エスペラントの語彙をキーワードとして使うプログラミング言語を作ろうとしています。OCamlとF#冗長構文を基にした構文を持ちます。
+
+作者はエスペラントとコンパイラ開発の両方において初学者です。レビューと修正を頂けると幸いです。
+
+現時点で書ける式の例です。
+
+- `komenc E fin`はOCamlの`begin E end`，
+- `vera` `falsa`は`true` `false`
+- `est E1 en E1`は`let E1 in E2`
+- `se E1 tiam E2 alie E3`は`if E1 then E2 else E3`
+- `rek`は`rec`
+
+にあたります。
+
+
 ```
 // 1
 1
