@@ -1,0 +1,6 @@
+(include_subdirs qualified)
+
+(library
+ (name lingveto)
+ (libraries sedlex menhirLib ppx_deriving.std)
+ (preprocess (pps sedlex.ppx ppx_deriving.std)))

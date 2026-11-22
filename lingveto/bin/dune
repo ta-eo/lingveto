@@ -1,0 +1,4 @@
+(executable
+ (public_name lingveto)
+ (name main)
+ (libraries lingveto))
