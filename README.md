@@ -11,6 +11,26 @@ TODO:
 3. 判別共用体 Discriminated Union
 4. パターンマッチ Pattern Matching
 
+Sintakso:
+
+```
+e ::= <id> 
+    | <digit> 
+    | b 
+    | e op e 
+    | se e tiam e alie e
+    | est <id> = e en e
+    | fn <id> -> e
+    | e e
+    | est rek <id> = fn <id> -> e en e
+    | ( e ) 
+    | komenc e fin
+
+b ::= vera | falsa
+
+op ::= + | <
+```
+
 現時点で書ける式の例です。
 
 - `komenc E fin`はOCamlの`begin E end`，
