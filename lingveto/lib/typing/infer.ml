@@ -81,7 +81,11 @@ let rec f gamma (e : expr) : Type.t =
       unify (f gamma e1) t e1;
       t
 
-let run (e : Syntax.Ast.t) : (Type.t, Type_error.t) result =
+let run e =
   Type.reset ();
-  try Ok (f Env.empty e) with
-  | Type_error.Error err -> Error err
+  try
+    Type.enter_level ();
+    let t = f Env.empty e in
+    Type.leave_level ();
+    Ok (Generalise.f t)
+  with Type_error.Error err -> Error err

@@ -4,6 +4,7 @@ type kind =
   | Unexpected_char of string
   | Int_literal_out_of_range of string
   | Syntax_error of string
+  | Reserved_word of string
 
 type t = { kind : kind; loc : Loc.t }
 
@@ -19,6 +20,7 @@ let message = function
       Printf.sprintf "integer literal out of range: %s" s
   | Syntax_error "" -> "syntax error"
   | Syntax_error s -> Printf.sprintf "syntax error near '%s'" s
+  | Reserved_word s -> Printf.sprintf "reserved word: '%s'" s
 
 let pp fmt { kind; loc } =
   Format.fprintf fmt "%a: error: %s" Loc.pp loc (message kind)

@@ -14,7 +14,7 @@ let lower = [%sedlex.regexp? eo_min | 'a' .. 'z']
 
 let snake_case = [%sedlex.regexp? (lower | '_'), Star (lower | digit | '_' | '\'')]
 
-let keyword_or_ident = function
+let keyword_or_ident loc = function
   | "vera"   -> TRUE
   | "falsa"  -> FALSE
   | "fn"     -> FUN
@@ -28,9 +28,9 @@ let keyword_or_ident = function
   | "bul"    -> TBOOL
   | "komenc" -> BEGIN
   | "fin"    -> END
-  | "kaze"
-  | "de"
-  | "tip"    -> failwith "reserved"
+  | "kaze"   -> Diagnostics.raise_at loc (Diagnostics.Reserved_word "kaze")
+  | "de"     -> Diagnostics.raise_at loc (Diagnostics.Reserved_word "de")
+  | "tip"    -> Diagnostics.raise_at loc (Diagnostics.Reserved_word "tip")
   | name     -> IDENT name
 
 let loc buf =
@@ -57,7 +57,7 @@ let rec token buf =
       end
 
   | snake_case ->
-      keyword_or_ident (Utf8.lexeme buf)
+      keyword_or_ident (loc buf) (Utf8.lexeme buf)
   
   | '=' ->
       EQ
