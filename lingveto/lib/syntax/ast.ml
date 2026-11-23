@@ -12,6 +12,7 @@ and expr = expr_desc node
 
 and expr_desc =
   | Int of int64
+  | Neg of expr
   | Bool of bool
   | Var of Id.t
   | Fun of Id.t * ty option * expr (* fun (id : tau) -> e *)

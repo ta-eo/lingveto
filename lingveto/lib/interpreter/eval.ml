@@ -7,6 +7,12 @@ let rec eval env e =
   | Int n ->
       VInt n
   
+  | Neg e1 ->
+      begin match eval env e1 with
+      | VInt n -> VInt (Int64.neg n)
+      | _ -> assert false
+      end
+  
   | Bool b ->
       VBool b
   

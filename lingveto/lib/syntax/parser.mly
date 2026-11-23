@@ -88,8 +88,15 @@ term:
       { e }
   
 factor:
-  | l=factor STAR r=app
+  | l=factor STAR r=unary
       { mk (Prim2 (Mul, l, r)) $startpos $endpos }
+  
+  | e=unary
+      { e }
+
+unary:
+  | MINUS e=unary
+      { mk (Neg e) $startpos $endpos }
   
   | e=app
       { e }

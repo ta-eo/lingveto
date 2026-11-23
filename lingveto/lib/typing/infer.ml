@@ -17,6 +17,10 @@ let rec infer gamma (e : expr) : Ty.t =
   match e.desc with
   | Int _ -> Ty.TInt
 
+  | Neg e1 ->
+      unify (infer gamma e1) Ty.TInt e1;
+      Ty.TInt
+
   | Bool _ -> Ty.TBool
 
   | Var x ->
