@@ -7,20 +7,24 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github ta-eo/lingveto))
 
 (authors "Author Name <author@example.com>")
 
 (maintainers "Maintainer Name <maintainer@example.com>")
 
-(license LICENSE)
+(license MIT)
 
 (documentation https://url/to/documentation)
 
 (package
  (name lingveto)
- (synopsis "A short synopsis")
- (description "A longer description")
- (depends ocaml)
+ (synopsis "Esperantobazita Programlingvo")
+ (description "Nepura funkcia programlingvo simila al OCaml kun Esperantaj ŝlosilvortoj")
+ (depends 
+  (ocaml (>= 4.14))
+  (menhir (>= 20240715))
+  (sedlex (>= 3.0))
+  ppx_deriving)
  (tags
-  ("add topics" "to describe" your project)))
+  ("esperanto" "programlingvo" esperanto programlingvo)))
