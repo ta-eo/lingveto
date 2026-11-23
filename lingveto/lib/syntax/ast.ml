@@ -24,6 +24,7 @@ and expr_desc =
 
 and prim2 =
   | Add
+  | Sub
   | Lt
 
 and ty = ty_desc node

@@ -20,7 +20,7 @@
 
 %token LT
 
-%token PLUS
+%token PLUS MINUS
 
 %token LPAREN RPAREN BEGIN END
 
@@ -75,6 +75,9 @@ cmp:
 arith:
   | l=arith PLUS r=app
       { mk (Prim2 (Add, l, r)) $startpos $endpos }
+  
+  | l=arith MINUS r=app
+      { mk (Prim2 (Sub, l, r)) $startpos $endpos }  
  
   | e=app
       { e }

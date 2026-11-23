@@ -72,7 +72,8 @@ let rec infer gamma (e : expr) : Ty.t =
       unify (infer gamma e1) Ty.TInt e1;
       unify (infer gamma e2) Ty.TInt e2;
       begin match op with
-      | Add -> Ty.TInt
+      | Add
+      | Sub -> Ty.TInt
       | Lt -> Ty.TBool
       end
 
