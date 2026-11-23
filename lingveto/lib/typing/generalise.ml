@@ -1,10 +1,10 @@
-open Type
+open Ty
 
 let f tau =
   let table = Hashtbl.create 8 in
   let rec loop tau =
-    match Type.repr tau with
-    | TVar { contents = Unbound (id, level) } when !Type.current_level < level ->
+    match Ty.repr tau with
+    | TVar { contents = Unbound (id, level) } when !Ty.current_level < level ->
         begin match Hashtbl.find_opt table id with
         | Some g -> g
         | None ->

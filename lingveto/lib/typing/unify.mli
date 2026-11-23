@@ -1,6 +1,6 @@
 exception Occurs
-exception Mismatch of Type.t * Type.t
+exception Mismatch of Ty.t * Ty.t
 
-val occurs : Type.id -> Type.level -> Type.t -> unit
+val occurs : Ty.id -> Ty.level -> Ty.t -> unit
 
-val f : Type.t -> Type.t -> unit
+val unify : Ty.t -> Ty.t -> unit

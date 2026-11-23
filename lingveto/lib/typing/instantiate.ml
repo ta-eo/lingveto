@@ -1,4 +1,4 @@
-open Type
+open Ty
 
 let f tau =
   let table = Hashtbl.create 8 in

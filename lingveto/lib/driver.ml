@@ -8,4 +8,4 @@ let eval_string ?fname s =
   | Ok ast ->
       match Typing.Infer.run ast with
       | Error e -> Error (Type e)
-      | Ok ty -> Ok (Interpreter.Eval.f Env.empty ast, ty)
+      | Ok ty -> Ok (Interpreter.Eval.eval Env.empty ast, ty)

@@ -1,23 +1,23 @@
 open Syntax.Ast
 
 let unify t1 t2 (at : _ node) =
-  try Unify.f t1 t2 with
+  try Unify.unify t1 t2 with
   | Unify.Occurs ->
       Type_error.raise_at at.loc Type_error.Occurs
   | Unify.Mismatch (a, b) ->
       Type_error.raise_at at.loc (Type_error.Mismatch (a, b))
 
-let rec of_ast_ty (t : ty) : Type.t =
+let rec of_ast_ty (t : ty) : Ty.t =
   match t.desc with
-  | TInt -> Type.TInt
-  | TBool -> Type.TBool
-  | TFun (a, b) -> Type.TFun (of_ast_ty a, of_ast_ty b)
+  | TInt -> Ty.TInt
+  | TBool -> Ty.TBool
+  | TFun (a, b) -> Ty.TFun (of_ast_ty a, of_ast_ty b)
 
-let rec f gamma (e : expr) : Type.t =
+let rec infer gamma (e : expr) : Ty.t =
   match e.desc with
-  | Int _ -> Type.TInt
+  | Int _ -> Ty.TInt
 
-  | Bool _ -> Type.TBool
+  | Bool _ -> Ty.TBool
 
   | Var x ->
       begin match Env.lookup x gamma with
@@ -29,63 +29,63 @@ let rec f gamma (e : expr) : Type.t =
       let tx =
         match ann with
         | Some t -> of_ast_ty t
-        | None -> Type.fresh_tvar ()
+        | None -> Ty.fresh_tvar ()
       in
-      let tb = f (Env.extend x tx gamma) body in
-      Type.TFun (tx, tb)
+      let tb = infer (Env.extend x tx gamma) body in
+      Ty.TFun (tx, tb)
 
   | App (fn, arg) ->
-      let tf = f gamma fn in
-      let ta = f gamma arg in
-      let tr = Type.fresh_tvar () in
-      unify tf (Type.TFun (ta, tr)) e;
+      let tf = infer gamma fn in
+      let ta = infer gamma arg in
+      let tr = Ty.fresh_tvar () in
+      unify tf (Ty.TFun (ta, tr)) e;
       tr
 
   | Let (x, e1, e2) ->
-      Type.enter_level ();
-      let t1 = f gamma e1 in
-      Type.leave_level ();
-      f (Env.extend x (Generalise.f t1) gamma) e2
+      Ty.enter_level ();
+      let t1 = infer gamma e1 in
+      Ty.leave_level ();
+      infer (Env.extend x (Generalise.f t1) gamma) e2
 
   | Letrec (g, x, ann, body, rest) ->
-      Type.enter_level ();
-      let tg = Type.fresh_tvar () in
+      Ty.enter_level ();
+      let tg = Ty.fresh_tvar () in
       let tx =
         match ann with
         | Some t -> of_ast_ty t
-        | None -> Type.fresh_tvar ()
+        | None -> Ty.fresh_tvar ()
       in
-      let tr = Type.fresh_tvar () in
-      unify tg (Type.TFun (tx, tr)) e;
-      let tb = f (Env.extend x tx (Env.extend g tg gamma)) body in
+      let tr = Ty.fresh_tvar () in
+      unify tg (Ty.TFun (tx, tr)) e;
+      let tb = infer (Env.extend x tx (Env.extend g tg gamma)) body in
       unify tr tb body;
-      Type.leave_level ();
-      f (Env.extend g (Generalise.f tg) gamma) rest
+      Ty.leave_level ();
+      infer (Env.extend g (Generalise.f tg) gamma) rest
 
   | If (c, e1, e2) ->
-      unify (f gamma c) Type.TBool c;
-      let t1 = f gamma e1 in
-      unify t1 (f gamma e2) e2;
+      unify (infer gamma c) Ty.TBool c;
+      let t1 = infer gamma e1 in
+      unify t1 (infer gamma e2) e2;
       t1
 
   | Prim2 (op, e1, e2) ->
-      unify (f gamma e1) Type.TInt e1;
-      unify (f gamma e2) Type.TInt e2;
+      unify (infer gamma e1) Ty.TInt e1;
+      unify (infer gamma e2) Ty.TInt e2;
       begin match op with
-      | Add -> Type.TInt
-      | Lt -> Type.TBool
+      | Add -> Ty.TInt
+      | Lt -> Ty.TBool
       end
 
   | Ann (e1, ty) ->
       let t = of_ast_ty ty in
-      unify (f gamma e1) t e1;
+      unify (infer gamma e1) t e1;
       t
 
 let run e =
-  Type.reset ();
+  Ty.reset ();
   try
-    Type.enter_level ();
-    let t = f Env.empty e in
-    Type.leave_level ();
+    Ty.enter_level ();
+    let t = infer Env.empty e in
+    Ty.leave_level ();
     Ok (Generalise.f t)
   with Type_error.Error err -> Error err

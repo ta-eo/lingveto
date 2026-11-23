@@ -1,7 +1,7 @@
-(* lib/typing/type_error.ml *)
+(* lib/typing/Ty_error.ml *)
 
 type kind =
-  | Mismatch of Type.t * Type.t
+  | Mismatch of Ty.t * Ty.t
   | Occurs
   | Unbound_var of Syntax.Id.t
 
@@ -13,9 +13,9 @@ let raise_at loc kind = raise (Error { kind; loc })
 
 let message = function
   | Mismatch (a, b) ->
-      Printf.sprintf "type mismatch: cannot unify %s with %s"
-        (Type.to_string a) (Type.to_string b)
-  | Occurs -> "occurs check failed: cannot construct an infinite type"
+      Printf.sprintf "Ty mismatch: cannot unify %s with %s"
+        (Ty.to_string a) (Ty.to_string b)
+  | Occurs -> "occurs check failed: cannot construct an infinite Ty"
   | Unbound_var x ->
       Printf.sprintf "unbound variable '%s'" (Syntax.Id.to_string x)
 

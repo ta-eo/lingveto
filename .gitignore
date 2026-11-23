@@ -37,6 +37,3 @@ _opam/
 
 # VSCode
 .vscode/
-
-# Test
-test/

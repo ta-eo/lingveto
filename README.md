@@ -35,7 +35,7 @@ op ::= + | <
 
 - `komenc E fin`はOCamlの`begin E end`，
 - `vera` `falsa`は`true` `false`
-- `est E1 en E1`は`let E1 in E2`
+- `est E1 en E2`は`let E1 in E2`
 - `se E1 tiam E2 alie E3`は`if E1 then E2 else E3`
 - `rek`は`rec`
 

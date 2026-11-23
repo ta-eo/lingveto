@@ -1,3 +1,3 @@
-val f : Type.t Env.t -> Syntax.Ast.expr -> Type.t
+val infer : Ty.t Env.t -> Syntax.Ast.expr -> Ty.t
 
-val run : Syntax.Ast.t -> (Type.t, Type_error.t) result
+val run : Syntax.Ast.t -> (Ty.t, Type_error.t) result

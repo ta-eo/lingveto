@@ -1,1 +1,1 @@
-val f : Type.t -> Type.t
+val f : Ty.t -> Ty.t
