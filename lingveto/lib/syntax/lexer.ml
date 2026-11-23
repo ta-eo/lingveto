@@ -79,6 +79,9 @@ let rec token buf =
   
   | '-' ->
       MINUS
+  
+  | '*' ->
+      STAR
 
   | '(' ->
       LPAREN

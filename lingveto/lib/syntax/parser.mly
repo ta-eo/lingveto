@@ -22,6 +22,8 @@
 
 %token PLUS MINUS
 
+%token STAR
+
 %token LPAREN RPAREN BEGIN END
 
 %token TINT TBOOL
@@ -66,19 +68,29 @@ expr:
 
 
 cmp:
-  | l=arith LT r=arith
-      { mk (Prim2 (Lt, l, r)) $startpos $endpos }  
+  | l=term EQ r=term
+      { mk (Prim2 (Eq, l, r)) $startpos $endpos }
 
-  | e=arith
+  | l=term LT r=term
+      { mk (Prim2 (Lt, l, r)) $startpos $endpos }
+
+  | e=term
       { e }
 
-arith:
-  | l=arith PLUS r=app
+term:
+  | l=term PLUS r=app
       { mk (Prim2 (Add, l, r)) $startpos $endpos }
   
-  | l=arith MINUS r=app
+  | l=term MINUS r=app
       { mk (Prim2 (Sub, l, r)) $startpos $endpos }  
  
+  | e=factor
+      { e }
+  
+factor:
+  | l=factor STAR r=app
+      { mk (Prim2 (Mul, l, r)) $startpos $endpos }
+  
   | e=app
       { e }
 

@@ -45,6 +45,8 @@ let rec eval env e =
       begin match op, v1, v2 with
       | Add, VInt a, VInt b -> VInt (Int64.add a b)
       | Sub, VInt a, VInt b -> VInt (Int64.sub a b)
+      | Mul, VInt a, VInt b -> VInt (Int64.mul a b)
+      | Eq, VInt a, VInt b -> VBool (a = b)
       | Lt, VInt a, VInt b -> VBool (Int64.compare a b < 0)
       | _ -> assert false
       end
