@@ -55,6 +55,9 @@ let rec token buf =
       | Some n -> INT n
       | None -> Diagnostics.raise_at (loc buf) (Diagnostics.Int_literal_out_of_range s)
       end
+  
+  | '_' -> 
+      Diagnostics.raise_at (loc buf) (Diagnostics.Reserved_word "wildcard '_'")
 
   | snake_case ->
       keyword_or_ident (loc buf) (Utf8.lexeme buf)
