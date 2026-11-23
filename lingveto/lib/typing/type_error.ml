@@ -13,9 +13,9 @@ let raise_at loc kind = raise (Error { kind; loc })
 
 let message = function
   | Mismatch (a, b) ->
-      Printf.sprintf "Ty mismatch: cannot unify %s with %s"
+      Printf.sprintf "Type mismatch: cannot unify %s with %s"
         (Ty.to_string a) (Ty.to_string b)
-  | Occurs -> "occurs check failed: cannot construct an infinite Ty"
+  | Occurs -> "occurs check failed: cannot construct an infinite Type"
   | Unbound_var x ->
       Printf.sprintf "unbound variable '%s'" (Syntax.Id.to_string x)
 

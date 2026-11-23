@@ -57,7 +57,7 @@ let rec token buf =
       end
   
   | '_' -> 
-      Diagnostics.raise_at (loc buf) (Diagnostics.Reserved_word "wildcard '_'")
+      Diagnostics.raise_at (loc buf) (Diagnostics.Reserved_word "_")
 
   | snake_case ->
       keyword_or_ident (loc buf) (Utf8.lexeme buf)

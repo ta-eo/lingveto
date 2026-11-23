@@ -1,17 +1,33 @@
 - Nepura funkcia programlingvo simila al OCaml
 - Uzas ŝlosilvortojn prenitajn de la Esperanta vortostoko
 
-エスペラントの語彙をキーワードとして使うプログラミング言語を作ろうとしています。OCamlとF#冗長構文を基にした構文を持ちます。
+エスペラントの語彙をキーワードとして使うプログラミング言語の開発を試みています。OCamlとF#冗長構文を基にした構文を持ちます。
 
-作者はエスペラントとコンパイラ開発の両方について初学者です。レビューと修正を頂けると幸いです。
+作者はエスペラントとコンパイラ開発の両方について初学者です。レビューと修正を求めています。
 
-TODO:
-1. ソースファイルから実行
-2. タプル Tuple
-3. 判別共用体 Discriminated Union
-4. パターンマッチ Pattern Matching
+### TODO
+1. ~~ソースファイルから実行~~
+2. **esperantigi error-messages**
+3. タプル Tuple (paro?)
+4. 判別共用体 Discriminated Unions (エスペラント表現わからない)
+5. パターンマッチ Pattern Matching (同上)
+6. 連結リスト Linked List (ĉeno? listo?)
 
-Sintakso:
+### エラー一覧 Errors (Eraroj?)
+(lexer)
+- 不正な文字 unexpected_char
+- 範囲外の整数リテラル int_lit_out_of_range
+- 予約語 reserved_word
+
+(parser)
+- 構文エラー syntax_error
+
+(typing)
+- 型が合わない type_mismatch
+- occurs check
+- 未束縛変数の参照 unbound_variable
+
+### Sintakso
 
 ```
 e ::= <id> 
