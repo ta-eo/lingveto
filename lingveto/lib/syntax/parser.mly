@@ -78,10 +78,10 @@ cmp:
       { e }
 
 term:
-  | l=term PLUS r=app
+  | l=term PLUS r=factor
       { mk (Prim2 (Add, l, r)) $startpos $endpos }
   
-  | l=term MINUS r=app
+  | l=term MINUS r=factor
       { mk (Prim2 (Sub, l, r)) $startpos $endpos }  
  
   | e=factor
