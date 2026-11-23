@@ -1,7 +1,7 @@
 %{
   open Ast
 
-  let t desc s e = { desc; loc = Loc.make s e }
+  let mk desc s e = { desc; loc = Loc.make s e }
 %}
 
 %token <int64> INT
@@ -40,62 +40,67 @@ main:
 
 expr:
   | LET x=IDENT EQ e1=expr IN e2=expr
-      { t (Let (Id.of_string x, e1, e2)) $startpos $endpos }
+      { mk (Let (Id.of_string x, e1, e2)) $startpos $endpos }
   
   | LET x=IDENT COLON tau=ty EQ e1=expr IN e2= expr
-      { let e1' = t (Ann (e1, tau)) $startpos(e1) $endpos(e1) in
-        t (Let (Id.of_string x, e1', e2)) $startpos $endpos }
+      { let e1' = mk (Ann (e1, tau)) $startpos(e1) $endpos(e1) in
+        mk (Let (Id.of_string x, e1', e2)) $startpos $endpos }
   
   | LET REC f=IDENT EQ FUN p=param ps=list(param) ARROW body=expr IN rest=expr
       { let (x, tau) = p in
         let body' = List.fold_right
-          (fun (y, tau) acc -> t (Fun (y, tau, acc)) $startpos(ps) $endpos(body))
+          (fun (y, tau) acc -> mk (Fun (y, tau, acc)) $startpos(ps) $endpos(body))
           ps body in
-        t (Letrec (Id.of_string f, x, tau, body', rest)) $startpos $endpos }
+        mk (Letrec (Id.of_string f, x, tau, body', rest)) $startpos $endpos }
 
   | FUN ps=nonempty_list(param) ARROW body=expr
       { List.fold_right
-          (fun (x, tau) acc -> t (Fun (x, tau, acc)) $startpos $endpos)
+          (fun (x, tau) acc -> mk (Fun (x, tau, acc)) $startpos $endpos)
           ps body }
   
   | IF e1=expr THEN e2=expr ELSE e3=expr
-      { t (If (e1, e2, e3)) $startpos $endpos }
+      { mk (If (e1, e2, e3)) $startpos $endpos }
   
-  | e=binop
+  | e=cmp
       { e }
 
-binop:
-  | l=binop PLUS r=app
-      { t (Prim2 (Add, l, r)) $startpos $endpos }
-  
-  | l=binop LT r=app
-      { t (Prim2 (Lt, l, r)) $startpos $endpos }
 
+cmp:
+  | l=arith LT r=arith
+      { mk (Prim2 (Lt, l, r)) $startpos $endpos }  
+
+  | e=arith
+      { e }
+
+arith:
+  | l=arith PLUS r=app
+      { mk (Prim2 (Add, l, r)) $startpos $endpos }
+ 
   | e=app
       { e }
 
 app:
   | func=app arg=atom
-      { t (App (func, arg)) $startpos $endpos }
+      { mk (App (func, arg)) $startpos $endpos }
   
   | e=atom
       { e }
   
 atom:
   | n=INT
-      { t (Int n) $startpos $endpos }
+      { mk (Int n) $startpos $endpos }
   
   | TRUE
-      { t (Bool true) $startpos $endpos }
+      { mk (Bool true) $startpos $endpos }
   
   | FALSE
-      { t (Bool false) $startpos $endpos }
+      { mk (Bool false) $startpos $endpos }
 
   | x=IDENT
-      { t (Var (Id.of_string x)) $startpos $endpos }
+      { mk (Var (Id.of_string x)) $startpos $endpos }
   
   | LPAREN e=expr COLON tau=ty RPAREN
-      { t (Ann (e, tau)) $startpos $endpos }
+      { mk (Ann (e, tau)) $startpos $endpos }
 
   | LPAREN e=expr RPAREN
       { e }
@@ -105,20 +110,20 @@ atom:
 
 ty:
   | t1=ty_atom ARROW t2=ty
-      { t (TFun (t1, t2)) $startpos $endpos }
+      { mk (TFun (t1, t2)) $startpos $endpos }
   
-  | t=ty_atom
-      { t }
+  | tau=ty_atom
+      { tau }
 
 ty_atom:
   | TINT
-      { t TInt $startpos $endpos }
+      { mk TInt $startpos $endpos }
   
   | TBOOL
-      { t TBool $startpos $endpos }
+      { mk TBool $startpos $endpos }
   
-  | LPAREN t=ty RPAREN
-      { t }
+  | LPAREN tau=ty RPAREN
+      { tau }
 
 param:
   | x=IDENT
