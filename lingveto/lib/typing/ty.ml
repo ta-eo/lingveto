@@ -36,13 +36,17 @@ let reset () =
   current_tvar := 0;
   current_level := 0
 
+let tgen_name n =
+  let letter = String.make 1 (Char.chr (Char.code 'a' + n mod 26)) in
+  if n < 26 then "'" ^ letter else "'" ^ letter ^ string_of_int (n / 26)
+
 let rec to_string_prec p t =
 match repr t with
 | TInt -> "int"
 | TBool -> "bool"
 | TVar { contents = Unbound (id, _) } -> Printf.sprintf "'_%d" id
 | TVar { contents = Link _ } -> assert false  (* repr で除去済み *)
-| TGen n -> Printf.sprintf "'%d" n
+| TGen n -> tgen_name n
 | TFun (a, b) ->
     let s = to_string_prec 1 a ^ " -> " ^ to_string_prec 0 b in
     if p > 0 then "(" ^ s ^ ")" else s
