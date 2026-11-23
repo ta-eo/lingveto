@@ -17,18 +17,22 @@ Sintakso:
 e ::= <id> 
     | <digit> 
     | b 
-    | e op e 
+    | -e
+    | e op e
     | se e tiam e alie e
     | est <id> = e en e
+    | est <id> : <ty> = e en e
     | fn <id> -> e
+    | fn (<id> : <ty>) -> e
     | e e
     | est rek <id> = fn <id> -> e en e
     | ( e ) 
+    | (e : <ty>)
     | komenc e fin
 
 b ::= vera | falsa
 
-op ::= + | <
+op ::= + | - | * | = | <
 ```
 
 現時点で書ける式の例です。
