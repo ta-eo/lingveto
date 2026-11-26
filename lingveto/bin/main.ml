@@ -10,10 +10,10 @@ let () =
         try read_file path with Sys_error msg -> prerr_endline msg; exit 2
       in
       begin match Driver.eval_string ~fname:path src with
-      | Ok (v, ty) ->
+      | Ok (v, tast) ->
           Printf.printf "%s : %s\n"
             (Interpreter.Value.to_string v)
-            (Typing.Ty.to_string ty)
+            (Typing.Ty.to_string tast.ty)
       | Error e ->
           Format.eprintf "%a@." Driver.pp_error e;
           exit 1
