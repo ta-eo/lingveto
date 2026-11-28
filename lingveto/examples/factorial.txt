@@ -1,7 +1,7 @@
-est rek f = 
-  fn (ak : ent) (x : ent) ->
+estu rek f = 
+  fn (a : ent) (x : ent) ->
     se x < 1
-    tiam ak
-    alie f (ak * x) (x - 1)
+    tiam a
+    alie f (a * x) (x - 1)
 en
 f 1 6

@@ -42,8 +42,8 @@ let tgen_name n =
 
 let rec to_string_prec p t =
 match repr t with
-| TInt -> "int"
-| TBool -> "bool"
+| TInt -> "ent"
+| TBool -> "bul"
 | TVar { contents = Unbound (id, _) } -> Printf.sprintf "'_%d" id
 | TVar { contents = Link _ } -> assert false  (* repr で除去済み *)
 | TGen n -> tgen_name n

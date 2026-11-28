@@ -18,7 +18,7 @@ let keyword_or_ident loc = function
   | "vera"   -> TRUE
   | "falsa"  -> FALSE
   | "fn"     -> FUN
-  | "est"    -> LET
+  | "estu"   -> LET
   | "rek"    -> REC
   | "en"     -> IN
   | "se"     -> IF
