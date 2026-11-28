@@ -19,6 +19,6 @@ type cexp =
 
 and expr =
   | Let of binder * cexp * expr
-  | Letrec of Syntax.Id.t * binder * expr * expr
+  | Letrec of binder * binder * expr * expr
   | Comp of cexp
   [@@deriving show { with_path = false }]

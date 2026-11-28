@@ -1,12 +1,10 @@
-module Ta = Ast
-
 let rec ty t =
   match Ty.repr t with
   | Ty.TFun (a, b) -> Ty.TFun (ty a, ty b)
   | t -> t
 
-let rec expr (e : Ta.expr) : Ta.expr =
-  let desc : Ta.expr_desc =
+let rec expr (e : Typed_ast.expr) : Typed_ast.expr =
+  let desc =
     match e.desc with
     | (Int _ | Bool _ | Var _) as d -> d
     | Neg a -> Neg (expr a)

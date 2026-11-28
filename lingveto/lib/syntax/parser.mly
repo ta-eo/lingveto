@@ -132,17 +132,17 @@ atom:
 
 ty:
   | t1=ty_atom ARROW t2=ty
-      { mk (TFun (t1, t2)) $startpos $endpos }
+      { mk (TAFun (t1, t2)) $startpos $endpos }
   
   | tau=ty_atom
       { tau }
 
 ty_atom:
   | TINT
-      { mk TInt $startpos $endpos }
+      { mk TAInt $startpos $endpos }
   
   | TBOOL
-      { mk TBool $startpos $endpos }
+      { mk TABool $startpos $endpos }
   
   | LPAREN tau=ty RPAREN
       { tau }

@@ -19,7 +19,7 @@ let rec occurs id level tau =
   | _ -> ()
 
 
-let rec unify tau1 tau2 =
+let rec f tau1 tau2 =
   let tau1 = Ty.repr tau1
   and tau2 = Ty.repr tau2 in
 
@@ -34,8 +34,8 @@ let rec unify tau1 tau2 =
     | TBool, TBool -> ()
     
     | TFun (a1, b1), TFun (a2, b2) ->
-        unify a1 a2;
-        unify b1 b2
+        f a1 a2;
+        f b1 b2
     
     | TVar r1, TVar r2 when r1 == r2 ->
         ()

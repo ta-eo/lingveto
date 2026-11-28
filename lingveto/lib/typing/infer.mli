@@ -1,2 +1,2 @@
-val infer : Ty.t Env.t -> Syntax.Ast.expr -> Ast.expr
-val run : Syntax.Ast.t -> (Ast.expr, Type_error.t) result
+val infer : Ty.t Env.t -> Syntax.Ast.expr -> Typed_ast.expr
+val run : Syntax.Ast.t -> (Typed_ast.expr, Type_error.t) result

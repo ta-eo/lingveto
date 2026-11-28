@@ -24,7 +24,7 @@ val enter_level : unit -> unit
 
 val leave_level : unit -> unit
 
-val fresh_tvar : unit -> t
+val fresh_type_var : unit -> t
 
 val reset : unit -> unit
 

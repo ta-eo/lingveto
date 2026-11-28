@@ -15,13 +15,13 @@ and expr_desc =
   | Neg of expr
   | Bool of bool
   | Var of Id.t
-  | Fun of Id.t * ty option * expr (* fun (id : tau) -> e *)
+  | Fun of Id.t * type_ann option * expr (* fun (id : tau) -> e *)
   | App of expr * expr
   | Let of Id.t * expr * expr
-  | Letrec of Id.t * Id.t * ty option * expr * expr (* let rec f = fun (x : tau) -> body in rest *)
+  | Letrec of Id.t * Id.t * type_ann option * expr * expr (* let rec f = fun (x : tau) -> body in rest *)
   | If of expr * expr * expr
   | Prim2 of prim2 * expr * expr
-  | Ann of expr * ty (* (e : tau) *)
+  | Ann of expr * type_ann (* (e : tau) *)
 
 and prim2 =
   | Add
@@ -30,11 +30,11 @@ and prim2 =
   | Eq
   | Lt
 
-and ty = ty_desc node
+and type_ann = type_ann_desc node
 
-and ty_desc =
-  | TInt
-  | TBool
-  | TFun of ty * ty
+and type_ann_desc =
+  | TAInt
+  | TABool
+  | TAFun of type_ann * type_ann
 [@@deriving show { with_path = false }, eq]
 

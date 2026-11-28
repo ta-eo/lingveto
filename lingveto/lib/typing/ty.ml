@@ -28,7 +28,7 @@ let current_level = ref 0
 let enter_level () = incr current_level
 let leave_level () = decr current_level
 
-let fresh_tvar () =
+let fresh_type_var () =
   incr current_tvar;
   TVar (ref (Unbound (!current_tvar, !current_level)))
 

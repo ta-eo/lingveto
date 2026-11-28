@@ -7,7 +7,7 @@ let f tau =
         begin match Hashtbl.find_opt table n with
         | Some v -> v
         | None ->
-            let v = fresh_tvar () in
+            let v = fresh_type_var () in
             Hashtbl.add table n v;
             v
         end
