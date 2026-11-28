@@ -9,7 +9,7 @@
 
 簡易なインタプリタを書きました。duneプロジェクトをビルドして動かせます。
 ```
-/lingveto$ dune exec lingveto examples/factorial.txt
+~/lingveto$ dune exec lingveto ~/examples/factorial.txt
 720 : ent
 ```
 
